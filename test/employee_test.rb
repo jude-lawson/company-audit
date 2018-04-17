@@ -11,7 +11,9 @@ class EmployeeTest < Minitest::Test
     end_date = '2018-01-01'
     @employee = Employee.new(employee_id, name, role, start_date, end_date)
     @start_date = DateHandler.string_to_date(start_date)
+    @end_date = DateHandler.string_to_date(end_date)
   end
+  
   def test_instantiation
     assert_instance_of Employee, @employee
   end
@@ -21,6 +23,9 @@ class EmployeeTest < Minitest::Test
     assert_equal 5, @employee.id
     assert_equal 'Sally Sparrow', @employee.name
     assert_equal 'Engineer', @employee.role
-    assert_equal 
+    assert_equal @start_date, @employee.start_date
+    assert_equal @end_date, @employee.end_date
   end
+
+
 end
