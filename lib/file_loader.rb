@@ -3,19 +3,11 @@ require 'csv'
 module FileLoader
   def load(path, filename)
     data = CSV.read("#{path}#{filename}", headers: :true, header_converters: :symbol)
-    check_for_nil(data)
-  end
-  
-  def check_for_nil(data)
-    data.each do |row|
+    all_attributes = data.map do |row|
       h = row.to_hash
-      values = h.values.all?
-      fields = h.keys.all?
-      if values && fields
-        data
-      else
-        'bad_data'
-      end 
-    end
+      h.values + h.keys
+    end.flatten
+    return 'bad_data' if all_attributes.any?(&:nil?)
+    return data
   end
 end
